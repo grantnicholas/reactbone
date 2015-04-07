@@ -91,7 +91,7 @@ define(function(require) {
                 this.on('change add update remove', function() {
                     console.log('Collection has changed.');
                     this.synch_data();
-                    this.load_data();
+                    // this.load_data();
                 }.bind(this));
 
             }
