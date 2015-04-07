@@ -1,2 +1,4 @@
 # reactbone
-boilerplate for reactbone apps
+A test ToDo app I built using react and backbone;
+
+

@@ -3,10 +3,14 @@ console.log('require.js app');
 require.config({
     "baseUrl": "/js",
     "paths": {
-        "jquery": "jquery",
-        "underscore": "underscore",
-        "backbone": "backbone",
-        "react": "react"
+        "jquery": "libs/jquery",
+        "underscore": "libs/underscore",
+        "backbone": "libs/backbone",
+        "react": "libs/react",
+        "todolist": "react_post/todolist",
+        "models": "models",
+        "router": "router",
+        "todos": "todos"
     },
     "shim": {
         "jquery": {
@@ -16,34 +20,45 @@ require.config({
             "exports": "_"
         },
         "backbone": {
-            "deps": ["jquery", "underscore"],
+            "exports": "Backbone",
+            "deps": ["jquery", "underscore"]
         },
         "react": {
-            "deps": ["backbone"],
-            "exports": "_React"
+            "exports": "_React",
+            "deps": ["backbone"]
         },
+        "todolist": {
+            "deps": ["jquery", "underscore", "backbone", "react", "models", "todos"]
+        },
+        "models": {
+            "exports": "Models",
+            "deps": ["jquery", "underscore", "backbone"]
+
+        },
+        "router": {
+            "exports": "Router",
+            "deps": ["jquery", "underscore", "backbone"],
+        },
+        "todos": {
+            "exports": "Data",
+            "deps": ["models", "backbone", "underscore", "jquery"]
+        }
 
     }
 });
 
+
 require(["jquery", "underscore", "react"], function($, _, _React) {
-    //GLOBAL REACT VARIABLE; needed for the below react components
-    React = _React; 
 
-    require(["backbone"], function(){
+    require(["backbone"], function(Backbone){
         console.log('backbone loaded');
-    });
+        console.log('backbone', Backbone);
 
-    // //REACT COMPONENTS;
-    // switch ($('body').attr('class')){
-    //     case 'default':
-    //         require(["searchdata", "searchbar"], function() {
-    //             console.log('searchbar loaded');
-    //         });
-    //         break;
-    //     default:
-    //         break;
-    // }
+        require(["models", "router", "todolist", "todos"], function(Models, Router){
+            console.log('loaded');
+
+        });
+    });
 
     //OTHER JS
     require(["app"], function() {
